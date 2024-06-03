@@ -2,6 +2,8 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require('mongoose');
 const BuyerRoutes = require('./Router/BuyerRoutes');
+
+const UserRoutes = require('./Router/UserRoutes');
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
@@ -12,6 +14,7 @@ const PORT = process.env.PORT || 8000;
 app.use(cors());
 app.use(bodyParser.json());
 app.use('/buyer', BuyerRoutes);
+app.use('/user', UserRoutes);
 
 const URL = process.env.MONGODB_URL;
 
