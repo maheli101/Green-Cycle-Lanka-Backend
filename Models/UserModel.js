@@ -4,43 +4,33 @@ const UserSchema = new mongoose.Schema(
     {
         name: {
             type: String,
-            required: [true, "Please enter name"]
+            required: false,
         },
         email: {
             type: String,
-            required: [true, "Please enter email"],
-            unique: true,
-            match: [/^\S+@\S+\.\S+$/, 'Please enter a valid email address']
+            required: false,
+            // unique: true,
+            // match: [/^\S+@\S+\.\S+$/, 'Please enter a valid email address']
         },
         contactNumber: {
             type: String,
-            required: [true, "Please enter contact number"],
-            match: [/^\d{10}$/, 'Please enter a valid contact number']
+            required: false,
+            // match: [/^\d{10}$/, 'Please enter a valid contact number']
         },
         NIC: {
             type: String,
-            required: [true, "Please enter NIC"],
-            unique: true
+            required: false,
+            // unique: true
         },
         password: {
             type: String,
-            required: [true, "Please enter password"]
-        },
-        repeatPassword: {
-            type: String,
-            required: [true, "Please repeat your password"],
-            validate: {
-                validator: function(value) {
-                    return value === this.password;
-                },
-                message: 'Passwords do not match'
-            }
+            required: false
         },
         type: {
             type: String,
-            required: [true, "Please select a type"],
-            enum: ["user", "driver"],
-            default: "user"
+            required: false,
+            // enum: ["user", "driver"],
+            // default: "user"
         },
         address: {
             type: String,
