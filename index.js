@@ -5,8 +5,13 @@ const mongoose = require('mongoose');
 
 
 const UserRoutes = require('./Router/UserRoutes');
+
+const DriverRoutes =require('./Router/DriverRoutes')
+const Login =require('./Router/loginRoute')
+
 const OrderRoutes = require('./Router/OrderRoutes');
 const RequestRoutes = require('./Router/RequestRoutes');
+
 
 
 const bodyParser = require("body-parser");
@@ -26,6 +31,9 @@ app.use(bodyParser.json());
 
 
 app.use('/user', UserRoutes);
+
+app.use('/Vehicle',DriverRoutes)
+app.use('/loginRoute',Login)
 app.use('/order', OrderRoutes);
 app.use('/request', RequestRoutes);
 
