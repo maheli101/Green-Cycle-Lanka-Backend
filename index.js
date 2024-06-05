@@ -1,11 +1,18 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require('mongoose');
-const BuyerRoutes = require('./Router/BuyerRoutes');
+
+
 
 const UserRoutes = require('./Router/UserRoutes');
+
 const DriverRoutes =require('./Router/DriverRoutes')
 const Login =require('./Router/loginRoute')
+
+const OrderRoutes = require('./Router/OrderRoutes');
+const RequestRoutes = require('./Router/RequestRoutes');
+
+
 
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -21,10 +28,14 @@ app.use((err, req, res, next) => {
   });
   
 app.use(bodyParser.json());
-app.use('/buyer', BuyerRoutes);
+
+
 app.use('/user', UserRoutes);
+
 app.use('/Vehicle',DriverRoutes)
 app.use('/loginRoute',Login)
+app.use('/order', OrderRoutes);
+app.use('/request', RequestRoutes);
 
 
 const URL = process.env.MONGODB_URL;
