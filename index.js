@@ -4,6 +4,9 @@ const mongoose = require('mongoose');
 const BuyerRoutes = require('./Router/BuyerRoutes');
 
 const UserRoutes = require('./Router/UserRoutes');
+const DriverRoutes =require('./Router/DriverRoutes')
+const Login =require('./Router/loginRoute')
+
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
@@ -20,6 +23,9 @@ app.use((err, req, res, next) => {
 app.use(bodyParser.json());
 app.use('/buyer', BuyerRoutes);
 app.use('/user', UserRoutes);
+app.use('/Vehicle',DriverRoutes)
+app.use('/loginRoute',Login)
+
 
 const URL = process.env.MONGODB_URL;
 
