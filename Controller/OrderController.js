@@ -29,7 +29,7 @@ const postOrder = async (req, res) => {
 
 const getOrders = async (req, res) => {
     try {
-        const orders = await Order.find().populate('user_id', 'name email');
+        const orders = await Order.find().populate('user_id', 'name email contactNumber ');
         res.status(200).json(orders);
     } catch (error) {
         res.status(500).json({ message: error.message });
