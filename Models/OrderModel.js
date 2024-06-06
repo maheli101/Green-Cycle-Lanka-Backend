@@ -29,5 +29,15 @@ const OrderSchema = new mongoose.Schema(
     }
 );
 
+// Static method to delete an order by ID
+OrderSchema.statics.deleteOrderById = async function(orderId) {
+    try {
+        const deletedOrder = await this.findByIdAndDelete(orderId);
+        return deletedOrder;
+    } catch (error) {
+        throw new Error(error.message);
+    }
+};
+
 const Order = mongoose.model('Order', OrderSchema);
 module.exports = Order;
