@@ -78,6 +78,7 @@ const getOrderId = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
 const Update = async (req, res) => {
     const reqId = req.params.id;
     const newStatus = req.body.status;
@@ -89,10 +90,25 @@ const Update = async (req, res) => {
     }
 };
 
+const deleteOrder = async (req, res) => {
+    const orderId = req.params.id;
+    try {
+        const deletedOrder = await Order.findByIdAndDelete(orderId);
+        if (!deletedOrder) {
+            return res.status(404).json({ message: 'Order not found' });
+        }
+        res.status(200).json({ message: 'Order deleted successfully' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error deleting order', error: error.message });
+    }
+};
+
 module.exports = {
     postOrder,
     getOrders,
     getAllOrderLocations,
     getOrderId,
     Update, 
+    deleteOrder // Add deleteOrder to the exports
 };
