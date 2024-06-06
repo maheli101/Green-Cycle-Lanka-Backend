@@ -31,7 +31,6 @@ app.use(bodyParser.json());
 
 
 app.use('/user', UserRoutes);
-
 app.use('/Vehicle',DriverRoutes)
 app.use('/loginRoute',Login)
 app.use('/order', OrderRoutes);
