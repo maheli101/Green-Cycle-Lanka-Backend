@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 const UserRoutes = require('./Router/UserRoutes');
 const OrderRoutes = require('./Router/OrderRoutes');
 const RequestRoutes = require('./Router/RequestRoutes');
+const ReqOrder = require('./Router/ReqOrderRouter');
 
 
 const bodyParser = require("body-parser");
@@ -28,6 +29,7 @@ app.use(bodyParser.json());
 app.use('/user', UserRoutes);
 app.use('/order', OrderRoutes);
 app.use('/request', RequestRoutes);
+app.use('/reqOrder',ReqOrder)
 
 
 const URL = process.env.MONGODB_URL;
