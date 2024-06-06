@@ -29,5 +29,14 @@ const RequestSchema = new mongoose.Schema(
     }
 );
 
+RequestSchema.statics.deleteRequestById = async function(requestId) {
+    try {
+        const deletedRequest = await this.findByIdAndDelete(requestId);
+        return deletedRequest;
+    } catch (error) {
+        throw new Error(error.message);
+    }
+};
+
 const Request = mongoose.model('Request', RequestSchema);
 module.exports = Request;

@@ -36,7 +36,22 @@ const getRequests = async (req, res) => {
     }
 };
 
+const deleteRequest = async (req, res) => {
+    try {
+        const requestId = req.params.id;
+        const deletedRequest = await Request.deleteRequestById(requestId);
+        if (!deletedRequest) {
+            return res.status(404).json({ message: 'Request not found' });
+        }
+        res.status(200).json({ message: 'Request deleted successfully' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error deleting request', error: error.message });
+    }
+};
+
 module.exports = {
     postRequest,
     getRequests,
+    deleteRequest,
 };

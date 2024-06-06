@@ -15,7 +15,7 @@ const OrderSchema = new mongoose.Schema(
             type: Number,
             required: true,
         },
-        town: { // Updated field from address to town
+        town: { 
             type: String,
             required: true,
         },
@@ -28,6 +28,16 @@ const OrderSchema = new mongoose.Schema(
         timestamps: true,
     }
 );
+
+// Static method to delete an order by ID
+OrderSchema.statics.deleteOrderById = async function(orderId) {
+    try {
+        const deletedOrder = await this.findByIdAndDelete(orderId);
+        return deletedOrder;
+    } catch (error) {
+        throw new Error(error.message);
+    }
+};
 
 const Order = mongoose.model('Order', OrderSchema);
 module.exports = Order;

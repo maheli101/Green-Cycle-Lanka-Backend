@@ -21,15 +21,16 @@ const loginController = async (req, res) => {
     // If email and password are correct, generate JWT token
     const userId=user._id
     const isDriver=user.type
+    const Name = user.name
 
     const token = jwt.sign(
-      { userId: user._id, email: user.email,isDriver:user.type },
-      process.env.JWT_SECRET ,
-      { expiresIn: '1h' } // Token expires in 1 hour
+      { userId, email: user.email, isDriver, Name },
+      process.env.JWT_SECRET,
+      { expiresIn: '1h' } 
     );
 
     // Send success response with token
-    res.json({ success: true, message: 'Login successful', token ,userId,isDriver});
+    res.json({ success: true, message: 'Login successful', token ,userId,isDriver,Name});
     console.log(token)
 
   } catch (error) {

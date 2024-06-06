@@ -26,11 +26,13 @@ const getCurrentUser = async (req, res) => {
     const userId = req.params.id; // Assuming the user ID is stored in the req.user object
     const user = await User.findById(userId);
 
+
     res.status(200).json(user);
   } catch (error) {
     res.status(500).json({ message: "No user" });
   }
 };
+
 const putUser = async (req, res) => {
   try {
     // Extract the user ID from the request parameters
