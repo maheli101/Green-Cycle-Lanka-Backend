@@ -2,13 +2,14 @@ const reqOrder = require('../Models/ReqOrder.js');
 
 module.exports.reqOrder = async (req, res) => {
     try {
-        const { user_id, user_name, order_id, status } = req.body;
+        const { user_id, user_name, order_id, status,town } = req.body;
 
         const newReqOrder = new reqOrder({
             user_id,
             user_name,
             order_id,
-            status:'pending'
+            status:'pending',
+            town
         });
 
         await newReqOrder.save();
@@ -60,5 +61,39 @@ module.exports.UpdateStatus = async (req, res) => {
     } catch (err) {
         console.error('Error updating status:', err);
         res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+
+module.exports.getOrderId = async (req, res) => {
+    const userId = req.params.id;
+    try {
+        const orders = await reqOrder.find({ status: 'confirmed',user_id:userId });
+         console.log(orders);
+        const locations = await Promise.all(orders.map(async (order) => {
+            const response = await fetch(`https://nominatim.openstreetmap.org/search?city=${order.town}&format=json&limit=1`);
+            const data = await response.json();
+             console.log(data);
+            if (data.length > 0) {
+                const { lat, lon } = data[0];
+                return {
+                    orderId: order._id,
+                    town: order.town,
+                    latitude: parseFloat(lat),
+                    longitude: parseFloat(lon),
+                    userName: order.user_name,
+                    material: order.material,
+                    amount: order.amount,
+                    status: order.status,
+                    
+                };
+            } else {
+                return null;
+            }
+        }));
+
+        res.json(locations.filter(location => location !== null));
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
 };
