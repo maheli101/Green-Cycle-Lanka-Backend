@@ -9,18 +9,17 @@ const UserSchema = new mongoose.Schema(
         email: {
             type: String,
             required: false,
-            // unique: true,
-            // match: [/^\S+@\S+\.\S+$/, 'Please enter a valid email address']
+             
         },
         contactNumber: {
             type: String,
             required: false,
-            // match: [/^\d{10}$/, 'Please enter a valid contact number']
+           
         },
         NIC: {
             type: String,
             required: false,
-            // unique: true
+           
         },
         password: {
             type: String,
@@ -29,8 +28,7 @@ const UserSchema = new mongoose.Schema(
         type: {
             type: String,
             required: false,
-            // enum: ["user", "driver"],
-            // default: "user"
+            
         },
         address: {
             type: String,
