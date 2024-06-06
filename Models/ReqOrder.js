@@ -14,6 +14,10 @@ const ReqOrder = new mongoose.Schema(
             type: String,
             required: true,
         },
+        town: {
+            type: String,
+            required: true,
+        },
         status: {
             type: String,
             default: 'pending',

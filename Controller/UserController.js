@@ -30,9 +30,7 @@ const getCurrentUser = async (req, res) => {
         // Assuming you're using JWT token for authentication
         const userId = req.params.id; // Assuming the user ID is stored in the req.user object
         
-        // Now you have the user ID, you can do whatever you want with it
-        
-        // Example: retrieve user from the database
+      
         const user = await User.findById(userId);
         
         res.status(200).json(user);
