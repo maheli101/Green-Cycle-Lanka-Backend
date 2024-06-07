@@ -18,6 +18,7 @@ const postRequest = async (req, res) => {
             material,
             amount,
             town,
+            status,
         });
 
         res.status(200).json({ message: 'Request submitted successfully', request });
