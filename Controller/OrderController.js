@@ -17,7 +17,8 @@ const postOrder = async (req, res) => {
             user_id: user._id,
             material,
             amount,
-            town, // Updated field from address to town
+            town,
+            status, // Updated field from address to town
         });
 
         res.status(200).json({ message: 'Order placed successfully', order });
