@@ -2,8 +2,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 
-const DriverSchema = new Schema({
-    user: { type: Schema.Types.ObjectId, ref: 'User' },
+
+const VehicleSchema = new Schema({
+    owner: { type: Schema.Types.ObjectId, ref: 'User', required: true }, 
     vehicleModel: {
         type: String,
         required: true
@@ -29,9 +30,10 @@ const DriverSchema = new Schema({
         required: true
     }
     ,
+   
      
 });
 
-const DriverModel = mongoose.model('Driver', DriverSchema);
+const VehicleModel = mongoose.model('Vehicle',VehicleSchema);
 
-module.exports = DriverModel;
+module.exports = VehicleModel;
