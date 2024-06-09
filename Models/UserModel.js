@@ -9,6 +9,7 @@ const UserSchema = new mongoose.Schema(
         email: {
             type: String,
             required: false,
+            unique:true
              
         },
         contactNumber: {
@@ -19,6 +20,7 @@ const UserSchema = new mongoose.Schema(
         NIC: {
             type: String,
             required: false,
+            unique:true
            
         },
         password: {
@@ -27,13 +29,11 @@ const UserSchema = new mongoose.Schema(
         },
         type: {
             type: String,
-            required: false,
+            required: true,
             
-        },
-        address: {
-            type: String,
-            required: false
-        },
+            
+        }
+        
     },
     {
         timestamps: true,
