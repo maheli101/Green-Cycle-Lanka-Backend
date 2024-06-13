@@ -1,13 +1,20 @@
 const Order = require('../Models/OrderModel.js');
 const User = require('../Models/UserModel.js');
+const mongoose = require('mongoose');
 
 const postOrder = async (req, res) => {
     try {
-        const { email, material, amount, town } = req.body;
+        const { userId, material, amount, town, status } = req.body;
+        console.log(userId);
 
-        // Find the user by email
-        const user = await User.findOne({ email });
+        // Validate userId
+        if (!mongoose.Types.ObjectId.isValid(userId)) {
+            return res.status(400).json({ message: 'Invalid userId format' });
+        }
 
+        // Find the user by ID
+        const user = await User.findById(userId);
+        console.log(user);
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
@@ -18,7 +25,7 @@ const postOrder = async (req, res) => {
             material,
             amount,
             town,
-            status, // Updated field from address to town
+            status, // Ensure this is provided in the request body
         });
 
         res.status(200).json({ message: 'Order placed successfully', order });
@@ -27,6 +34,7 @@ const postOrder = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
 
 const getOrders = async (req, res) => {
     try {
@@ -105,11 +113,77 @@ const deleteOrder = async (req, res) => {
     }
 };
 
+// Helper function to format date to dd/mm/yy without time
+const formatDate = (date) => {
+    const d = new Date(date);
+    const day = String(d.getDate()).padStart(2, '0');
+    const month = String(d.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
+    const year = String(d.getFullYear()).substr(-2);
+    return `${day}/${month}/${year}`;
+};
+
+
+const getOrdersByUserId = async (req, res) => {
+    const userId = req.params.id;
+    try {
+        console.log(userId);
+        // Validate userId
+        if (!mongoose.Types.ObjectId.isValid(userId)) {
+            return res.status(400).json({ message: 'Invalid userId format' });
+        }
+
+        const orders = await Order.find({ user_id: userId }).populate('user_id', 'name email contactNumber');
+        
+
+        if (orders.length === 0) {
+            return res.status(404).json({ message: 'No orders found for this user' });
+        }
+
+        // Format the createdAt and updatedAt fields
+        const formattedOrders = orders.map(order => ({
+            _id: order._id,
+            user_id: order.user_id,
+            material: order.material,
+            amount: order.amount,
+            town: order.town,
+            status: order.status,
+            createdAt: formatDate(order.createdAt),
+            updatedAt: formatDate(order.updatedAt)
+        }));
+        console.log(formattedOrders);
+        res.status(200).json(formattedOrders);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+const updateOrder = async (req, res) => {
+    const orderId = req.params.id;
+    const { material, amount, town } = req.body;
+    try {
+        const updatedOrder = await Order.findByIdAndUpdate(orderId, { material, amount, town }, { new: true });
+        if (!updatedOrder) {
+            return res.status(404).json({ message: 'Order not found' });
+        }
+        res.status(200).json(updatedOrder);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error updating order', error: error.message });
+    }
+};
+
+
+
+
+
+
 module.exports = {
     postOrder,
     getOrders,
+    updateOrder,
     getAllOrderLocations,
     getOrderId,
     Update, 
+    getOrdersByUserId,
     deleteOrder // Add deleteOrder to the exports
 };
