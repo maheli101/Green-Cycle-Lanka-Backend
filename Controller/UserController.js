@@ -43,7 +43,6 @@ const putUser = async (req, res) => {
 
     // Extract the user data from the request body
     const userData = req.body;
-
     // Find the user by ID and update their information
     const updatedUser = await User.findByIdAndUpdate(
       userId,
@@ -52,7 +51,7 @@ const putUser = async (req, res) => {
     );
 
     if (!updatedUser) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({ message: "Can't update the User" });
     }
 
     res
