@@ -10,7 +10,7 @@ const VehicleSchema = new Schema({
         required: true
     },
     capacity: {
-        type: Number,
+        type: String,
         required: true
     },
     lisonNumber: {
