@@ -69,7 +69,7 @@ module.exports.getOrderId = async (req, res) => {
     const userId = req.params.id;
     try {
         const orders = await reqOrder.find({ status: 'confirmed',user_id:userId });
-         console.log(orders);
+        //  console.log(orders);
         const locations = await Promise.all(orders.map(async (order) => {
             const response = await fetch(`https://nominatim.openstreetmap.org/search?city=${order.town}&format=json&limit=1`);
             const data = await response.json();
@@ -82,8 +82,6 @@ module.exports.getOrderId = async (req, res) => {
                     latitude: parseFloat(lat),
                     longitude: parseFloat(lon),
                     userName: order.user_name,
-                    material: order.material,
-                    amount: order.amount,
                     status: order.status,
                     
                 };
