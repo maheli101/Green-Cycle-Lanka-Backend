@@ -172,7 +172,23 @@ const updateOrder = async (req, res) => {
     }
 };
 
-
+const saveComment = async (req,res) =>{
+    const { comment, mood } = req.body; 
+    const commentSchema = new mongoose.Schema({
+        comment: String,
+        mood: String,
+      });
+      
+      const Comment = mongoose.model('Comment', commentSchema);
+    try {
+      const newComment = new Comment({ comment, mood });
+      await newComment.save();
+      res.status(201).json({ message: 'Comment saved successfully' });
+    } catch (err) {
+      console.error('Error saving comment:', err);
+      res.status(500).json({ error: 'Failed to save comment' });
+    }
+  };
 
 
 
@@ -185,5 +201,6 @@ module.exports = {
     getOrderId,
     Update, 
     getOrdersByUserId,
-    deleteOrder // Add deleteOrder to the exports
+    deleteOrder, // Add deleteOrder to the exports
+    saveComment
 };
